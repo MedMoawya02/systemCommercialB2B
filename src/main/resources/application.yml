@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: microtech-b2b-api
+
+  datasource:
+    # Remplacez 'postgres' et 'votre_mot_de_passe' par vos identifiants locaux
+    url: jdbc:postgresql://localhost:5434/microtechB2B
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # 'update' met à jour le schéma de la BDD automatiquement à chaque démarrage (idéal pour le développement)
+      ddl-auto: update
+    show-sql: true # Affiche les requêtes SQL générées dans la console
+    properties:
+      hibernate:
+        format_sql: true # Formate joliment le SQL affiché
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
+
+  # Configuration de la session HTTP (Exigence du cahier des charges)
+  servlet:
+    session:
+      timeout: 30m
+      cookie:
+        http-only: true
