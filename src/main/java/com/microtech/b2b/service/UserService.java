@@ -10,6 +10,6 @@ public interface UserService {
     UserResponse create(UserRequest user);
     UserResponse update(Long id, UserRequest request);
     UserResponse findById(Long id);
-    List<User> finAll();
+    List<UserResponse> findAll();
     void delete(Long id);
 }

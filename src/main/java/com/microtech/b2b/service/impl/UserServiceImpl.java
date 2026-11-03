@@ -51,17 +51,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserResponse findById(Long id) {
-        return null;
+        User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Utilisateur introuvable"));
+        return userMapper.toRespone(user);
     }
 
     @Override
-    public List<User> finAll() {
-        return List.of();
+    @Transactional(readOnly = true)
+    public List<UserResponse> findAll() {
+        return userMapper.toResponseList(userRepository.findAll());
     }
 
     @Override
     public void delete(Long id) {
-
+        User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Utilisateur introuvable"));
+        userRepository.delete(user);
     }
 }

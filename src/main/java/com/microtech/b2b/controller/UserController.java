@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -23,5 +25,20 @@ public class UserController {
     @PutMapping("/{id}")
     public UserResponse update(@Valid @PathVariable Long id,@RequestBody UserRequest request){
         return userService.update(id,request);
+    }
+
+    @GetMapping("/{id}")
+    public UserResponse findUserById(@PathVariable Long id){
+        return userService.findById(id);
+    }
+    @GetMapping
+    public List<UserResponse> findAll(){
+        return userService.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delte(@PathVariable Long id){
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
