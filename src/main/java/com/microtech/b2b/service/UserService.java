@@ -12,4 +12,7 @@ public interface UserService {
     UserResponse findById(Long id);
     List<UserResponse> findAll();
     void delete(Long id);
+
+    //Authentification
+    User authentificate(String usernam,String password);
 }

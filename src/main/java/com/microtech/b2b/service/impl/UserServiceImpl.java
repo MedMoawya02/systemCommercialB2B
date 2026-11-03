@@ -5,6 +5,7 @@ import com.microtech.b2b.dto.response.UserResponse;
 import com.microtech.b2b.entity.User;
 import com.microtech.b2b.exception.BusinessException;
 import com.microtech.b2b.exception.ResourceNotFoundException;
+import com.microtech.b2b.exception.UnauthorizedException;
 import com.microtech.b2b.mapper.UserMapper;
 import com.microtech.b2b.repository.UserRepository;
 import com.microtech.b2b.service.UserService;
@@ -67,5 +68,15 @@ public class UserServiceImpl implements UserService {
     public void delete(Long id) {
         User user=userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("Utilisateur introuvable"));
         userRepository.delete(user);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User authentificate(String username, String password) {
+        User user=userRepository.findByUsername(username).orElseThrow(()->new ResourceNotFoundException("ce usernamen'existe pas"));
+        if(!passwordEncoder.matches(password,password)){
+            throw new UnauthorizedException("mot de passe incorrect");
+        }
+        return user;
     }
 }

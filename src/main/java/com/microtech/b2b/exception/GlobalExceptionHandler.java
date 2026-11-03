@@ -46,6 +46,17 @@ public class GlobalExceptionHandler {
         return build(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR",
                 ex.getMessage(), req);
     }
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Map<String, Object>> handleUnauthorized(
+            UnauthorizedException ex, HttpServletRequest req) {
+        return build(HttpStatus.UNAUTHORIZED, "UNAUTHORIZED", ex.getMessage(), req);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<Map<String, Object>> handleForbidden(
+            ForbiddenException ex, HttpServletRequest req) {
+        return build(HttpStatus.FORBIDDEN, "FORBIDDEN", ex.getMessage(), req);
+    }
 
     private ResponseEntity<Map<String, Object>> build(
             HttpStatus status, String type, String message, HttpServletRequest req) {
