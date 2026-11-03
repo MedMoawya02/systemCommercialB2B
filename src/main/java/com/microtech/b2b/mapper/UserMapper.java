@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface UserMapper {
     UserResponse toRespone(User user);
-    List<UserResponse> toResponseList(User user);
+    List<UserResponse> toResponseList(List<User> users);
 
     @Mapping(target = "id",ignore = true)
     @Mapping(target = "password",ignore = true)
