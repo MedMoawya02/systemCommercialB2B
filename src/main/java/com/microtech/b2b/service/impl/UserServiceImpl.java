@@ -73,8 +73,17 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User authentificate(String username, String password) {
-        User user=userRepository.findByUsername(username).orElseThrow(()->new ResourceNotFoundException("ce usernamen'existe pas"));
-        if(!passwordEncoder.matches(password,password)){
+        System.out.println(">>> [AUTH] Tentative pour username = [" + username + "]");
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> {
+                    System.out.println(">>> [AUTH] Utilisateur introuvable");
+                    return new UnauthorizedException("Nom d'utilisateur ou mot de passe incorrect");
+                });
+
+        System.out.println(">>> [AUTH] Hash en base = " + user.getPassword());
+        System.out.println(">>> [AUTH] Mot de passe reçu length = "
+                + (password == null ? "null" : password.length()));
+        if(!passwordEncoder.matches(password,user.getPassword())){
             throw new UnauthorizedException("mot de passe incorrect");
         }
         return user;

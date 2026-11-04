@@ -14,5 +14,5 @@ public interface UserService {
     void delete(Long id);
 
     //Authentification
-    User authentificate(String usernam,String password);
+    User authentificate(String username,String password);
 }
